@@ -3,7 +3,7 @@ defmodule Ueberauth.Strategy.Typetalk do
   Provides an Ueberauth strategy for authenticating with Typetalk.
   """
 
-  use Ueberauth.Strategy, uid_field: :sub, default_scope: "my", hd: nil
+  use Ueberauth.Strategy, uid_field: :id, default_scope: "my"
 
   alias Ueberauth.Auth.Info
   alias Ueberauth.Auth.Credentials
