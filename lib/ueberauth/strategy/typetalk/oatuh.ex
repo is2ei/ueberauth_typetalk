@@ -25,7 +25,11 @@ defmodule Ueberauth.Strategy.Typetalk.OAuth do
   These options are only useful for usage outside the normal callback phase of Ueberauth.
   """
   def client(opts \\ []) do
-    config = Application.get_env(:ueberauth, Ueberauth.Strategy.Typetalk.OAuth)
+    config =
+      :ueberauth
+      |> Application.fetch_env!(Ueberauth.Strategy.Typetalk.OAuth)
+      |> check_config_key_exists(:client_id)
+      |> check_config_key_exists(:client_secret)
 
     opts =
       @defaults
@@ -51,18 +55,12 @@ defmodule Ueberauth.Strategy.Typetalk.OAuth do
     |> OAuth2.Client.get(url, headers, opts)
   end
 
-  def get_access_token(params \\ [], opts \\ []) do
-    case opts |> client |> OAuth2.Client.get_token(params) do
-      {:error, %{body: %{"error" => error, "error_description" => description}}} ->
-        {:error, {error, description}}
-
-      {:ok, %{token: %{access_token: nil} = token}} ->
-        %{"error" => error, "error_description" => description} = token.other_params
-        {:error, {error, description}}
-
-      {:ok, %{token: token}} ->
-        {:ok, token}
-    end
+  def get_access_token(params \\ [], options \\ []) do
+    headers = Keyword.get(options, :headers, [])
+    options = Keyword.get(options, :options, [])
+    client_options = Keyword.get(options, :client_options, [])
+    client = OAuth2.Client.get_token!(client(client_options), params, headers, options)
+    client.token
   end
 
   # Strategy Callbacks
@@ -76,5 +74,17 @@ defmodule Ueberauth.Strategy.Typetalk.OAuth do
     |> put_param("client_secret", client.client_secret)
     |> put_header("Accept", "application/json")
     |> OAuth2.Strategy.AuthCode.get_token(params, headers)
+  end
+
+  defp check_config_key_exists(config, key) when is_list(config) do
+    unless Keyword.has_key?(config, key) do
+      raise "#{inspect(key)} missing from config :ueberauth, Ueberauth.Strategy.Typetalk"
+    end
+
+    config
+  end
+
+  defp check_config_key_exists(_, _) do
+    raise "Config :ueberauth, Ueberauth.Strategy.Typetalk is not a keyword list, as expected"
   end
 end
