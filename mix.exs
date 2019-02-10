@@ -22,8 +22,8 @@ defmodule UeberauthTypetalk.Mixfile do
 
   defp deps do
     [
-      {:oauth2, "~> 0.8.0"},
-      {:ueberauth, "~> 0.4"},
+      {:oauth2, "~> 0.9.4"},
+      {:ueberauth, "~> 0.5"},
 
       # dev/test dependencies
       {:credo, "~> 0.5", only: [:dev, :test]},
