@@ -38,7 +38,9 @@ defmodule Ueberauth.Strategy.Typetalk do
   """
   def handle_callback!(%Plug.Conn{params: %{"code" => code}} = conn) do
     module = option(conn, :oauth2_module)
-    token = apply(module, :get_token!, [[code: code], [redirect_uri: callback_url(conn)]])
+    params = [code: code]
+    opts = [redirect_uri: callback_url(conn)]
+    token = apply(module, :get_token!, [params, opts])
 
     if token.access_token == nil do
       set_errors!(conn, [
