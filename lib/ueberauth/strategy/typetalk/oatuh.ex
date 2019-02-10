@@ -14,7 +14,7 @@ defmodule Ueberauth.Strategy.Typetalk.OAuth do
     strategy: __MODULE__,
     site: "https://typetalk.com",
     authorize_url: "/oauth2/authorize",
-    token_url: "/oauth2/access_token",
+    token_url: "/oauth2/access_token"
   ]
 
   @doc """
@@ -55,9 +55,11 @@ defmodule Ueberauth.Strategy.Typetalk.OAuth do
     case opts |> client |> OAuth2.Client.get_token(params) do
       {:error, %{body: %{"error" => error, "error_description" => description}}} ->
         {:error, {error, description}}
+
       {:ok, %{token: %{access_token: nil} = token}} ->
         %{"error" => error, "error_description" => description} = token.other_params
         {:error, {error, description}}
+
       {:ok, %{token: token}} ->
         {:ok, token}
     end

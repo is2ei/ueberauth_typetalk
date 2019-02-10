@@ -3,12 +3,14 @@ defmodule Ueberauth.Strategy.Typetalk do
   Provides an Ueberauth strategy for authenticating with Typetalk.
   """
 
-  use Ueberauth.Strategy, uid_field: :id, default_scope: "my"
+  use Ueberauth.Strategy,
+    uid_field: :id,
+    default_scope: "my",
+    oauth2_module: Ueberauth.Strategy.Typetalk.OAuth
 
   alias Ueberauth.Auth.Info
   alias Ueberauth.Auth.Credentials
   alias Ueberauth.Auth.Extra
-
 
   @doc """
   Handles the initial redirect to the typetalk authentication page.
@@ -22,28 +24,28 @@ defmodule Ueberauth.Strategy.Typetalk do
   def handle_request!(conn) do
     scopes = conn.params["scope"] || option(conn, :default_scope)
 
-    params =
-      [scope: scopes]
+    opts = [redirect_uri: callback_url(conn), scope: scopes]
 
-    opts = [redirect_uri: callback_url(conn)]
-
-    opts = 
+    opts =
       if conn.params["state"], do: Keyword.put(opts, :state, conn.params["state"]), else: opts
 
-    redirect!(conn, Ueberauth.Strategy.Typetalk.OAuth.authorize_url!(params, opts))
+    module = option(conn, :oauth2_module)
+    redirect!(conn, apply(module, :authorize_url!, [opts]))
   end
 
   @doc """
   Handles the callback from Typetalk.
   """
   def handle_callback!(%Plug.Conn{params: %{"code" => code}} = conn) do
-    params = [code: code]
-    opts = [redirect_uri: callback_url(conn)]
-    case Ueberauth.Strategy.Typetalk.OAuth.get_access_token(params, opts) do
-      {:ok, token} ->
-        fetch_user(conn, token)
-      {:error, {error_code, error_description}} ->
-        set_errors!(conn, [error(error_code, error_description)])
+    module = option(conn, :oauth2_module)
+    token = apply(module, :get_token!, [[code: code]])
+
+    if token.access_token == nil do
+      set_errors!(conn, [
+        error(token.other_params["error"], token.other_params["error_description"])
+      ])
+    else
+      fetch_user(conn, token)
     end
   end
 
@@ -78,7 +80,7 @@ defmodule Ueberauth.Strategy.Typetalk do
   """
   def credentials(conn) do
     token = conn.private.typetalk_token
-    scope_string = (token.other_params["scope"] || "")
+    scope_string = token.other_params["scope"] || ""
     scopes = String.split(scope_string, ",")
 
     %Credentials{
@@ -87,7 +89,7 @@ defmodule Ueberauth.Strategy.Typetalk do
       expires_at: token.expires_at,
       expires: !!token.expires_at,
       token_type: Map.get(token, :token_type),
-      scopes: scopes,
+      scopes: scopes
     }
   end
 
@@ -106,10 +108,10 @@ defmodule Ueberauth.Strategy.Typetalk do
   Stores the raw information (including the token) obtained from the typetalk callback.
   """
   def extra(conn) do
-    %Extra {
+    %Extra{
       raw_info: %{
         token: conn.private.typetalk_token,
-        user: conn.private.typetalk_user,
+        user: conn.private.typetalk_user
       }
     }
   end
