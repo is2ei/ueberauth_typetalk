@@ -11,3 +11,7 @@ script:
   - mix deps.get
   - mix format --check-formatted
   - mix test
+  - MIX_ENV=test mix do compile --warnings-as-errors, coveralls.json
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
