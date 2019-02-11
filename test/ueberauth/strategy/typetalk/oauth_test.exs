@@ -28,6 +28,8 @@ defmodule Ueberauth.Strategy.Typetalk.OAuthTest do
   test "authorize_url!" do
     opts = [redirect_uri: "/auth/typetalk/callback", scope: "my topic.read"]
     authorize_url = OAuth.authorize_url!(opts)
-    assert authorize_url == "https://typetalk.com/oauth2/authorize?client_id=CLIENT_ID&redirect_uri=%2Fauth%2Ftypetalk%2Fcallback&response_type=code&scope=my+topic.read"
+
+    assert authorize_url ==
+             "https://typetalk.com/oauth2/authorize?client_id=CLIENT_ID&redirect_uri=%2Fauth%2Ftypetalk%2Fcallback&response_type=code&scope=my+topic.read"
   end
 end
