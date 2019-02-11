@@ -89,7 +89,7 @@ defmodule Ueberauth.Strategy.Typetalk do
   def credentials(conn) do
     token = conn.private.typetalk_token
     scope_string = token.other_params["scope"] || ""
-    scopes = String.split(scope_string, ",")
+    scopes = String.split(scope_string, " ")
 
     %Credentials{
       token: token.access_token,
@@ -103,12 +103,17 @@ defmodule Ueberauth.Strategy.Typetalk do
 
   @doc """
   Fetches the fields to populate the info section of the `Ueberauth.Auth` struct.
+
+  Typetalk API docs: https://developer.nulab-inc.com/docs/typetalk/api/1/get-profile/
   """
   def info(conn) do
     user = conn.private.typetalk_user
 
     %Info{
-      name: user["name"]
+      name: user["fullName"],
+      nickname: user["name"],
+      email: user["mailAddress"],
+      image: user["imageUrl"]      
     }
   end
 
