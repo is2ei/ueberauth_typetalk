@@ -12,7 +12,7 @@ defmodule UeberauthTypetalk.Mixfile do
       elixir: "~> 1.3",
       description: description(),
       deps: deps(),
-      docs: docs(),
+      docs: docs()
     ]
   end
 
@@ -28,7 +28,7 @@ defmodule UeberauthTypetalk.Mixfile do
       # dev/test dependencies
       {:credo, "~> 0.5", only: [:dev, :test]},
       {:earmark, ">= 0.0.0", only: :dev},
-      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
 
@@ -45,7 +45,7 @@ defmodule UeberauthTypetalk.Mixfile do
       files: ["lib", "mix.exs", "README.md"],
       mainterners: ["Issei Horie"],
       licenses: ["MIT"],
-      links: %{"Typetalk": "https://github.com/is2ei/ueberauth_typetalk"}
+      links: %{Typetalk: "https://github.com/is2ei/ueberauth_typetalk"}
     ]
   end
 end
