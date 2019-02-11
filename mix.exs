@@ -12,7 +12,13 @@ defmodule UeberauthTypetalk.Mixfile do
       elixir: "~> 1.3",
       description: description(),
       deps: deps(),
-      docs: docs()
+      docs: docs(),
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.html": :test,
+        "coveralls.json": :test
+      ],
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -28,7 +34,8 @@ defmodule UeberauthTypetalk.Mixfile do
       # dev/test dependencies
       {:credo, "~> 0.5", only: [:dev, :test]},
       {:earmark, ">= 0.0.0", only: :dev},
-      {:ex_doc, ">= 0.0.0", only: :dev}
+      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:excoveralls, "~> 0.5.7", only: :test}
     ]
   end
 
