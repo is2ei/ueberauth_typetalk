@@ -1,8 +1,10 @@
 Überauth Typetalk
 ===
+[![Build Status](https://travis-ci.com/is2ei/ueberauth_typetalk.svg?branch=master)][travis]
 [![Hex Version](http://img.shields.io/hexpm/v/ueberauth_typetalk.svg)][hex]
 [![Hex docs](http://img.shields.io/badge/hex.pm-docs-green.svg)][docs]
 
+[travis]: https://travis-ci.com/is2ei/ueberauth_typetalk
 [hex]: https://hex.pm/packages/ueberauth_typetalk
 [docs]: https://hexdocs.pm/ueberauth_typetalk
 
