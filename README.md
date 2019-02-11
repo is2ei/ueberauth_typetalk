@@ -1,8 +1,10 @@
 Überauth Typetalk
 ===
 [![Hex Version](http://img.shields.io/hexpm/v/ueberauth_typetalk.svg)][hex]
+[![Hex docs](http://img.shields.io/badge/hex.pm-docs-green.svg)][docs]
 
 [hex]: https://hex.pm/packages/ueberauth_typetalk
+[docs]: https://hexdocs.pm/ueberauth_typetalk
 
 Typetalk OAuth2 Strategy for Überauth 
 
