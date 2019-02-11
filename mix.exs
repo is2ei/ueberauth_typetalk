@@ -35,7 +35,7 @@ defmodule UeberauthTypetalk.Mixfile do
       {:credo, "~> 0.5", only: [:dev, :test]},
       {:earmark, ">= 0.0.0", only: :dev},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:excoveralls, "~> 0.5.7", only: :test}
+      {:excoveralls, "~> 0.10.5", only: :test}
     ]
   end
 
