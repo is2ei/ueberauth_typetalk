@@ -113,7 +113,7 @@ defmodule Ueberauth.Strategy.Typetalk do
       name: user["fullName"],
       nickname: user["name"],
       email: user["mailAddress"],
-      image: user["imageUrl"]      
+      image: user["imageUrl"]
     }
   end
 
