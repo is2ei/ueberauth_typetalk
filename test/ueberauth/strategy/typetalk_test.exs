@@ -3,8 +3,15 @@ defmodule Ueberauth.Strategy.TypetalkTest do
 
   doctest Ueberauth.Strategy.Typetalk
 
-  test "is Truth" do
-    assert 1 + 1 == 2
+  alias Ueberauth.Strategy.Typetalk.OAuth
+
+  setup do
+    Application.put_env(:ueberauth, OAuth,
+      client_id: "CLIENT_ID",
+      client_secret: "CLIENT_SECRET"
+    )
+
+    :ok
   end
 
   describe "handle_request!" do
@@ -51,9 +58,9 @@ defmodule Ueberauth.Strategy.TypetalkTest do
 
     conn =
       %Plug.Conn{}
-      |> Plug.Conn.put_private(:typetalk_user, %{"id" => uid})
+      |> Plug.Conn.put_private(:typetalk_user, %{id: "not-found-id"})
 
-    # assert Ueberauth.Strategy.Typetalk.uid(conn) == nil
+    assert Ueberauth.Strategy.Typetalk.uid(conn) == nil
   end
 
   describe "credentials" do

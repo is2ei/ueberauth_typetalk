@@ -38,7 +38,7 @@ defmodule Ueberauth.Strategy.Typetalk do
   """
   def handle_callback!(%Plug.Conn{params: %{"code" => code}} = conn) do
     module = option(conn, :oauth2_module)
-    params = [code: code]
+    params = [code: code, redirect_uri: callback_url(conn)]
 
     opts = %{
       options: [
@@ -142,6 +142,6 @@ defmodule Ueberauth.Strategy.Typetalk do
   end
 
   defp option(conn, key) do
-    Keyword.get(options(conn), key, Keyword.get(default_options(), key))
+    Keyword.get(options(conn) || [], key, Keyword.get(default_options(), key))
   end
 end
