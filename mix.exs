@@ -6,19 +6,19 @@ defmodule UeberauthTypetalk.Mixfile do
   def project do
     [
       app: :ueberauth_typetalk,
-      version: @version,
       name: "Ueberauth Typetalk",
+      version: @version,
       package: package(),
       elixir: "~> 1.3",
       description: description(),
       deps: deps(),
       docs: docs(),
+      test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
         coveralls: :test,
         "coveralls.html": :test,
         "coveralls.json": :test
-      ],
-      test_coverage: [tool: ExCoveralls]
+      ]
     ]
   end
 
