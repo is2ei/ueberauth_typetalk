@@ -1,3 +1,10 @@
+## Install dependencies
+
+```
+$ mix deps.get
+```
+
+
 ## Test
 
 ```
