@@ -24,8 +24,8 @@ defmodule Ueberauth.Strategy.TypetalkTest do
         }
       }
 
-      # result = Ueberauth.Strategy.Typetalk.handle_request!(conn)
-      # assert result == nil
+      result = Ueberauth.Strategy.Typetalk.handle_request!(conn)
+      assert result == nil
     end
   end
 
@@ -40,6 +40,18 @@ defmodule Ueberauth.Strategy.TypetalkTest do
       assert no_code_error.message_key == "missing_code"
       assert no_code_error.message == "No code received"
     end
+
+    ### TODO: Mock endpoint
+    # test "with code" do
+    #   conn = %Plug.Conn{
+    #     params: %{
+    #       "code" => "XXXXXXXXXX"
+    #     }
+    #   }
+
+    #   result = Ueberauth.Strategy.Typetalk.handle_callback!(conn)
+    #   assert result == "test"
+    # end
   end
 
   describe "handle_cleanup!" do

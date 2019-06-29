@@ -30,12 +30,14 @@ defmodule UeberauthTypetalk.Mixfile do
     [
       {:oauth2, "~> 0.9.4"},
       {:ueberauth, "~> 0.5"},
+      {:jason, "~> 1.0"},
 
       # dev/test dependencies
       {:credo, "~> 0.5", only: [:dev, :test]},
       {:earmark, ">= 0.0.0", only: :dev},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:excoveralls, "~> 0.10.5", only: :test}
+      {:excoveralls, "~> 0.10.5", only: :test},
+      {:poison, "~> 3.1"}
     ]
   end
 
