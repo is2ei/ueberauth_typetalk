@@ -16,13 +16,13 @@ defmodule Ueberauth.Strategy.TypetalkTest do
 
   describe "handle_request!" do
     test "..." do
-      conn = %Plug.Conn{
-        params: %{
-          cliend_id: "12345",
-          client_secret: "98765",
-          redirect_uri: "http://localhost:4000/auth/typetalk/callback"
-        }
-      }
+      # conn = %Plug.Conn{
+      #   params: %{
+      #     cliend_id: "12345",
+      #     client_secret: "98765",
+      #     redirect_uri: "http://localhost:4000/auth/typetalk/callback"
+      #   }
+      # }
 
       ### TODO: Fix error
       # result = Ueberauth.Strategy.Typetalk.handle_request!(conn)
@@ -67,7 +67,7 @@ defmodule Ueberauth.Strategy.TypetalkTest do
   end
 
   describe "uid" do
-    uid = "abcd1234abcd1234"
+    # uid = "abcd1234abcd1234"
 
     conn =
       %Plug.Conn{}

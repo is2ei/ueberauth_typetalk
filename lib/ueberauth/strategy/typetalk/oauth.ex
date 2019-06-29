@@ -31,12 +31,12 @@ defmodule Ueberauth.Strategy.Typetalk.OAuth do
       |> check_config_key_exists(:client_id)
       |> check_config_key_exists(:client_secret)
 
-    opts =
+    client_opts =
       @defaults
-      |> Keyword.merge(opts)
       |> Keyword.merge(config)
+      |> Keyword.merge(opts)
 
-    OAuth2.Client.new(opts)
+    OAuth2.Client.new(client_opts)
   end
 
   @doc """
@@ -56,10 +56,10 @@ defmodule Ueberauth.Strategy.Typetalk.OAuth do
   end
 
   def get_token!(params \\ [], options \\ []) do
-    headers = Map.get(options, :headers, [])
-    options = Map.get(options, :options, [])
+    headers        = Keyword.get(options, :headers, [])
+    options        = Keyword.get(options, :options, [])
     client_options = Keyword.get(options, :client_options, [])
-    client = OAuth2.Client.get_token!(client(client_options), params, headers, options)
+    client         = OAuth2.Client.get_token!(client(client_options), params, headers, options)
     client.token
   end
 

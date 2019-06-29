@@ -46,7 +46,7 @@ defmodule Ueberauth.Strategy.Typetalk do
       ]
     }
 
-    token = apply(module, :get_token!, [params, opts])
+    token = apply(module, :get_token!, [[code: code]])
 
     if token.access_token == nil do
       set_errors!(conn, [
@@ -131,14 +131,18 @@ defmodule Ueberauth.Strategy.Typetalk do
 
   defp fetch_user(conn, token) do
     conn = put_private(conn, :typetalk_user, token)
-  end
 
-  defp with_param(opts, key, conn) do
-    if value = conn.params[to_string(key)], do: Keyword.put(opts, key, value), else: opts
-  end
+    case Ueberauth.Strategy.Typetalk.OAuth.get(token, "/api/v1/profile") do
+      {:ok, %OAuth2.Response{status_code: 401, body: _body}} ->
+        set_errors!(conn, [error("token", "unauthorized")])
 
-  defp with_optional(opts, key, conn) do
-    if option(conn, key), do: Keyword.put(opts, key, option(conn, key)), else: opts
+      {:ok, %OAuth2.Response{status_code: status_code, body: user}}
+      when status_code in 200..399 ->
+        put_private(conn, :typetalk_user, user)
+
+      {:error, %OAuth2.Error{reason: reason}} ->
+        set_errors!(conn, [error("OAuth2", reason)])
+    end
   end
 
   defp option(conn, key) do
