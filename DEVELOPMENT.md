@@ -14,7 +14,7 @@ $ mix test
 ### Build
 
 ```
-$ mix build
+$ mix hex.build
 ```
 
 ### Publish
