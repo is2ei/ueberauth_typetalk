@@ -61,7 +61,6 @@ defmodule Ueberauth.Strategy.Typetalk do
   def handle_cleanup!(conn) do
     conn
     |> put_private(:typetalk_user, nil)
-    |> put_private(:typetalk_token, nil)
   end
 
   @doc """
@@ -123,7 +122,7 @@ defmodule Ueberauth.Strategy.Typetalk do
   end
 
   defp fetch_user(conn, token) do
-    conn = put_private(conn, :typetalk_user, token)
+    conn = put_private(conn, :typetalk_token, token)
 
     case Ueberauth.Strategy.Typetalk.OAuth.get(token, "/api/v1/profile") do
       {:ok, %OAuth2.Response{status_code: 401, body: _body}} ->
