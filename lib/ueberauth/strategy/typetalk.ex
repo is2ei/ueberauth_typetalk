@@ -67,12 +67,12 @@ defmodule Ueberauth.Strategy.Typetalk do
   Fetches the account id field fron the response.
   """
   def uid(conn) do
-    uid_field =
+    user =
       conn
       |> option(:uid_field)
       |> to_string
 
-    conn.private.typetalk_user[uid_field]
+    conn.private.typetalk_user[user]
   end
 
   @doc """
@@ -102,7 +102,7 @@ defmodule Ueberauth.Strategy.Typetalk do
     user = conn.private.typetalk_user
 
     %Info{
-      name: user["fullName"],
+      name: user["account"]["fullName"],
       nickname: user["name"],
       email: user["mailAddress"],
       image: user["imageUrl"]
