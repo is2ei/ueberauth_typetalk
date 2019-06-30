@@ -20,7 +20,7 @@ Typetalk OAuth2 Strategy for Überauth
 
 ```elixir
 def deps do
-  [{:ueberauth_typetalk, "~> 0.1"}]
+  [{:ueberauth_typetalk, "~> 0.2"}]
 end
 ```
 
