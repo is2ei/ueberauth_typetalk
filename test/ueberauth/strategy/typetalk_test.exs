@@ -101,10 +101,12 @@ defmodule Ueberauth.Strategy.TypetalkTest do
       conn =
         %Plug.Conn{}
         |> Plug.Conn.put_private(:typetalk_user, %{
-          "fullName" => "Issei Horie",
-          "name" => "is2ei",
-          "mailAddress" => "is2ei@example.com",
-          "imageUrl" => "https://typetalk.com/accounts/2500/profile_image.png?t=1454061730873"
+          "account" => %{
+            "fullName" => "Issei Horie",
+            "name" => "is2ei",
+            "mailAddress" => "is2ei@example.com",
+            "imageUrl" => "https://typetalk.com/accounts/2500/profile_image.png?t=1454061730873"  
+          }
         })
 
       info = Ueberauth.Strategy.Typetalk.info(conn)
