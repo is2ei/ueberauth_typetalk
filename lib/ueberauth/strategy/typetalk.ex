@@ -103,9 +103,9 @@ defmodule Ueberauth.Strategy.Typetalk do
 
     %Info{
       name: user["account"]["fullName"],
-      nickname: user["name"],
-      email: user["mailAddress"],
-      image: user["imageUrl"]
+      nickname: user["account"]["name"],
+      email: user["account"]["mailAddress"],
+      image: user["account"]["imageUrl"]
     }
   end
 
