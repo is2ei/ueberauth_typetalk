@@ -105,7 +105,7 @@ defmodule Ueberauth.Strategy.TypetalkTest do
             "fullName" => "Issei Horie",
             "name" => "is2ei",
             "mailAddress" => "is2ei@example.com",
-            "imageUrl" => "https://typetalk.com/accounts/2500/profile_image.png?t=1454061730873"  
+            "imageUrl" => "https://typetalk.com/accounts/2500/profile_image.png?t=1454061730873"
           }
         })
 

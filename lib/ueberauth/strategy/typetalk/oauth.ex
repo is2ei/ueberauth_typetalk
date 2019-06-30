@@ -56,10 +56,10 @@ defmodule Ueberauth.Strategy.Typetalk.OAuth do
   end
 
   def get_token!(params \\ [], options \\ []) do
-    headers        = Keyword.get(options, :headers, [])
-    options        = Keyword.get(options, :options, [])
+    headers = Keyword.get(options, :headers, [])
+    options = Keyword.get(options, :options, [])
     client_options = Keyword.get(options, :client_options, [])
-    client         = OAuth2.Client.get_token!(client(client_options), params, headers, options)
+    client = OAuth2.Client.get_token!(client(client_options), params, headers, options)
     client.token
   end
 
